@@ -74,7 +74,7 @@ public class CommunicationIntent extends Intent {
     private static final String EXTRA_EVENT = "idEvent";
     private static final String EXTRA_ACTION = "idAction";
     private static final String EXTRA_ORIGIN_PACKAGE = "packageorigin";
-    private static final String password = "password";
+    private static final String password = BuildConfig.SECRET_KEY;
 
     protected String params = "";
     private JSONObject json;

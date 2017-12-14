@@ -1,5 +1,20 @@
 apply plugin: 'com.android.library'
 
+def getKey() {
+    Properties properties = new Properties()
+    try {
+        properties.load(project.file('secret.key').newDataInputStream())
+    }
+    catch (Exception ignore) {}
+
+    def key  = properties.getProperty('key')
+    if (key== null) return "\"\"0123456789ABCDEF\"\""
+    else {
+        print('Key loaded: ' + key + '\n')
+        return key
+    }
+}
+
 android {
     compileSdkVersion 23
     buildToolsVersion "25.0.2"
@@ -12,7 +27,15 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "SECRET_KEY", getKey()
         }
+        debug {
+            buildConfigField "String", "SECRET_KEY", getKey()
+        }
+        beta {
+            buildConfigField "String", "SECRET_KEY", getKey()
+        }
+
     }
     lintOptions {
         abortOnError false
